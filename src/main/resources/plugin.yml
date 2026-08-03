@@ -1,0 +1,4 @@
+name: ProyectEXTINCTION
+version: 1.0
+main: com.extinction.Main
+api-version: '1.20'
