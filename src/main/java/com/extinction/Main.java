@@ -3,6 +3,8 @@ package com.proyectoextinction;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
+import org.bukkit.NamespacedKey;
+import org.bukkit.Registry;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.attribute.AttributeInstance;
 import org.bukkit.command.Command;
@@ -32,7 +34,7 @@ public final class Main extends JavaPlugin implements Listener, CommandExecutor 
         if (getCommand("extinctionmenu") != null) {
             getCommand("extinctionmenu").setExecutor(this);
         }
-        getLogger().info("ProyectEXTINCTION activado correctamente.");
+        getLogger().info("ProyectEXTINCTION activado correctamente en Java 21.");
     }
 
     @Override
@@ -84,8 +86,8 @@ public final class Main extends JavaPlugin implements Listener, CommandExecutor 
         ItemStack item = new ItemStack(Material.NETHERITE_HELMET);
         ItemMeta meta = item.getItemMeta();
         meta.setDisplayName(ChatColor.DARK_RED + "Casco Extinto");
-        meta.addEnchant(Enchantment.PROTECTION, 10, true);
-        meta.addEnchant(Enchantment.UNBREAKING, 10, true);
+        meta.addEnchant(Registry.ENCHANTMENT.get(NamespacedKey.minecraft("protection")), 10, true);
+        meta.addEnchant(Registry.ENCHANTMENT.get(NamespacedKey.minecraft("unbreaking")), 10, true);
         item.setItemMeta(meta);
         return item;
     }
@@ -94,8 +96,8 @@ public final class Main extends JavaPlugin implements Listener, CommandExecutor 
         ItemStack item = new ItemStack(Material.NETHERITE_CHESTPLATE);
         ItemMeta meta = item.getItemMeta();
         meta.setDisplayName(ChatColor.DARK_RED + "Pechera Extinta");
-        meta.addEnchant(Enchantment.PROTECTION, 10, true);
-        meta.addEnchant(Enchantment.UNBREAKING, 10, true);
+        meta.addEnchant(Registry.ENCHANTMENT.get(NamespacedKey.minecraft("protection")), 10, true);
+        meta.addEnchant(Registry.ENCHANTMENT.get(NamespacedKey.minecraft("unbreaking")), 10, true);
         item.setItemMeta(meta);
         return item;
     }
@@ -104,8 +106,8 @@ public final class Main extends JavaPlugin implements Listener, CommandExecutor 
         ItemStack item = new ItemStack(Material.NETHERITE_LEGGINGS);
         ItemMeta meta = item.getItemMeta();
         meta.setDisplayName(ChatColor.DARK_RED + "Pantalones Extintos");
-        meta.addEnchant(Enchantment.PROTECTION, 10, true);
-        meta.addEnchant(Enchantment.UNBREAKING, 10, true);
+        meta.addEnchant(Registry.ENCHANTMENT.get(NamespacedKey.minecraft("protection")), 10, true);
+        meta.addEnchant(Registry.ENCHANTMENT.get(NamespacedKey.minecraft("unbreaking")), 10, true);
         item.setItemMeta(meta);
         return item;
     }
@@ -114,8 +116,8 @@ public final class Main extends JavaPlugin implements Listener, CommandExecutor 
         ItemStack item = new ItemStack(Material.NETHERITE_BOOTS);
         ItemMeta meta = item.getItemMeta();
         meta.setDisplayName(ChatColor.DARK_RED + "Botas Extintas");
-        meta.addEnchant(Enchantment.PROTECTION, 10, true);
-        meta.addEnchant(Enchantment.UNBREAKING, 10, true);
+        meta.addEnchant(Registry.ENCHANTMENT.get(NamespacedKey.minecraft("protection")), 10, true);
+        meta.addEnchant(Registry.ENCHANTMENT.get(NamespacedKey.minecraft("unbreaking")), 10, true);
         item.setItemMeta(meta);
         return item;
     }
@@ -127,10 +129,10 @@ public final class Main extends JavaPlugin implements Listener, CommandExecutor 
             zombie.setCustomName(ChatColor.DARK_RED + "Zombie Extinto");
             zombie.setCustomNameVisible(true);
             
-            AttributeInstance attackAttr = zombie.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE);
+            AttributeInstance attackAttr = zombie.getAttribute(Attribute.ATTACK_DAMAGE);
             if (attackAttr != null) attackAttr.setBaseValue(30.0);
 
-            AttributeInstance healthAttr = zombie.getAttribute(Attribute.GENERIC_MAX_HEALTH);
+            AttributeInstance healthAttr = zombie.getAttribute(Attribute.MAX_HEALTH);
             if (healthAttr != null) {
                 healthAttr.setBaseValue(50.0);
                 zombie.setHealth(50.0);
@@ -141,7 +143,7 @@ public final class Main extends JavaPlugin implements Listener, CommandExecutor 
             creeper.setCustomNameVisible(true);
             creeper.setPowered(true);
 
-            AttributeInstance healthAttr = creeper.getAttribute(Attribute.GENERIC_MAX_HEALTH);
+            AttributeInstance healthAttr = creeper.getAttribute(Attribute.MAX_HEALTH);
             if (healthAttr != null) {
                 healthAttr.setBaseValue(50.0);
                 creeper.setHealth(50.0);
