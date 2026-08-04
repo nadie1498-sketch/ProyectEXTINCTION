@@ -4,5 +4,4 @@ main: com.proyectoextinction.Main
 api-version: 1.20
 commands:
   extinctionmenu:
-    description: Abre el inventario creativo de ProyectEXTINCTION
-    aliases: [pext, extinction]
+    description: Abre el inventario de ProyectEXTINCTION
