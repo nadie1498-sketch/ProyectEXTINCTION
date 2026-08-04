@@ -1,5 +1,8 @@
+name: ProyectEXTINCTION
+version: 1.0
+main: com.proyectoextinction.Main
+api-version: 1.20
 commands:
-  extinction:
-    description: Da los items de ProyectEXTINCTION
-    permission: extinction.admin
-    usage: /extinction
+  extinctionmenu:
+    description: Abre el inventario creativo de ProyectEXTINCTION
+    aliases: [pext, extinction]
