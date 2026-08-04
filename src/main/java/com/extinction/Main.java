@@ -10,7 +10,6 @@ import org.bukkit.attribute.AttributeInstance;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
-import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Creeper;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Zombie;
@@ -34,7 +33,7 @@ public final class Main extends JavaPlugin implements Listener, CommandExecutor 
         if (getCommand("extinctionmenu") != null) {
             getCommand("extinctionmenu").setExecutor(this);
         }
-        getLogger().info("ProyectEXTINCTION activado correctamente en Java 21.");
+        getLogger().info("ProyectEXTINCTION activado correctamente.");
     }
 
     @Override
