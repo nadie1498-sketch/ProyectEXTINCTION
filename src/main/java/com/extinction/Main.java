@@ -32,7 +32,7 @@ public final class Main extends JavaPlugin implements Listener, CommandExecutor 
         if (getCommand("extinctionmenu") != null) {
             getCommand("extinctionmenu").setExecutor(this);
         }
-        getLogger().info("ProyectEXTINCTION ha sido activado correctamente.");
+        getLogger().info("ProyectEXTINCTION activado correctamente.");
     }
 
     @Override
@@ -43,12 +43,10 @@ public final class Main extends JavaPlugin implements Listener, CommandExecutor 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         if (!(sender instanceof Player)) {
-            sender.sendMessage("Este comando solo puede ser ejecutado por un jugador.");
+            sender.sendMessage("Solo jugadores pueden usar este comando.");
             return true;
         }
-
-        Player player = (Player) sender;
-        openExtinctionMenu(player);
+        openExtinctionMenu((Player) sender);
         return true;
     }
 
@@ -60,18 +58,15 @@ public final class Main extends JavaPlugin implements Listener, CommandExecutor 
         menu.setItem(12, getExtinctionLeggings());
         menu.setItem(13, getExtinctionBoots());
         
-        ItemStack mobSpawnerInfo = new ItemStack(Material.ZOMBIE_HEAD);
-        ItemMeta mobMeta = mobSpawnerInfo.getItemMeta();
-        mobMeta.setDisplayName(ChatColor.RED + "Mobs Extintos");
-        List<String> mobLore = new ArrayList<>();
-        mobLore.add(ChatColor.GRAY + "Generados automáticamente en el mundo:");
-        mobLore.add(ChatColor.YELLOW + "- Zombie Extinto (Daño: 30, Resistencia: 50)");
-        mobLore.add(ChatColor.YELLOW + "- Creeper Extinto (Daño: 30, Resistencia: 50)");
-        mobMeta.setLore(mobLore);
-        mobSpawnerInfo.setItemMeta(mobMeta);
+        ItemStack info = new ItemStack(Material.ZOMBIE_HEAD);
+        ItemMeta meta = info.getItemMeta();
+        meta.setDisplayName(ChatColor.RED + "Mobs Extintos");
+        List<String> lore = new ArrayList<>();
+        lore.add(ChatColor.GRAY + "Zombie y Creeper con Daño: 30 y Resistencia: 50");
+        meta.setLore(lore);
+        info.setItemMeta(meta);
         
-        menu.setItem(16, mobSpawnerInfo);
-
+        menu.setItem(16, info);
         player.openInventory(menu);
     }
 
@@ -81,7 +76,6 @@ public final class Main extends JavaPlugin implements Listener, CommandExecutor 
             event.setCancelled(true);
             if (event.getCurrentItem() != null && event.getCurrentItem().getType() != Material.AIR) {
                 event.getWhoClicked().getInventory().addItem(event.getCurrentItem());
-                event.getWhoClicked().sendMessage(ChatColor.GREEN + "¡Has obtenido un objeto de ProyectEXTINCTION!");
             }
         }
     }
@@ -91,8 +85,7 @@ public final class Main extends JavaPlugin implements Listener, CommandExecutor 
         ItemMeta meta = item.getItemMeta();
         meta.setDisplayName(ChatColor.DARK_RED + "Casco Extinto");
         meta.addEnchant(Enchantment.PROTECTION, 10, true);
-        meta.addEnchant(Enchantment.DURABILITY, 10, true);
-        meta.addEnchant(Enchantment.WATER_WORKER, 1, true);
+        meta.addEnchant(Enchantment.UNBREAKING, 10, true);
         item.setItemMeta(meta);
         return item;
     }
@@ -102,8 +95,7 @@ public final class Main extends JavaPlugin implements Listener, CommandExecutor 
         ItemMeta meta = item.getItemMeta();
         meta.setDisplayName(ChatColor.DARK_RED + "Pechera Extinta");
         meta.addEnchant(Enchantment.PROTECTION, 10, true);
-        meta.addEnchant(Enchantment.DURABILITY, 10, true);
-        meta.addEnchant(Enchantment.THORNS, 5, true);
+        meta.addEnchant(Enchantment.UNBREAKING, 10, true);
         item.setItemMeta(meta);
         return item;
     }
@@ -113,7 +105,7 @@ public final class Main extends JavaPlugin implements Listener, CommandExecutor 
         ItemMeta meta = item.getItemMeta();
         meta.setDisplayName(ChatColor.DARK_RED + "Pantalones Extintos");
         meta.addEnchant(Enchantment.PROTECTION, 10, true);
-        meta.addEnchant(Enchantment.DURABILITY, 10, true);
+        meta.addEnchant(Enchantment.UNBREAKING, 10, true);
         item.setItemMeta(meta);
         return item;
     }
@@ -123,8 +115,7 @@ public final class Main extends JavaPlugin implements Listener, CommandExecutor 
         ItemMeta meta = item.getItemMeta();
         meta.setDisplayName(ChatColor.DARK_RED + "Botas Extintas");
         meta.addEnchant(Enchantment.PROTECTION, 10, true);
-        meta.addEnchant(Enchantment.PROTECTION_FALL, 10, true);
-        meta.addEnchant(Enchantment.DURABILITY, 10, true);
+        meta.addEnchant(Enchantment.UNBREAKING, 10, true);
         item.setItemMeta(meta);
         return item;
     }
@@ -133,31 +124,27 @@ public final class Main extends JavaPlugin implements Listener, CommandExecutor 
     public void onEntitySpawn(EntitySpawnEvent event) {
         if (event.getEntity() instanceof Zombie) {
             Zombie zombie = (Zombie) event.getEntity();
-            if (zombie.getCustomName() == null || !zombie.getCustomName().contains("Extinto")) {
-                zombie.setCustomName(ChatColor.DARK_RED + "Zombie Extinto");
-                zombie.setCustomNameVisible(true);
-                
-                AttributeInstance attackAttr = zombie.getAttribute(Attribute.ATTACK_DAMAGE);
-                if (attackAttr != null) attackAttr.setBaseValue(30.0);
+            zombie.setCustomName(ChatColor.DARK_RED + "Zombie Extinto");
+            zombie.setCustomNameVisible(true);
+            
+            AttributeInstance attackAttr = zombie.getAttribute(Attribute.GENERIC_ATTACK_DAMAGE);
+            if (attackAttr != null) attackAttr.setBaseValue(30.0);
 
-                AttributeInstance healthAttr = zombie.getAttribute(Attribute.MAX_HEALTH);
-                if (healthAttr != null) {
-                    healthAttr.setBaseValue(50.0);
-                    zombie.setHealth(50.0);
-                }
+            AttributeInstance healthAttr = zombie.getAttribute(Attribute.GENERIC_MAX_HEALTH);
+            if (healthAttr != null) {
+                healthAttr.setBaseValue(50.0);
+                zombie.setHealth(50.0);
             }
         } else if (event.getEntity() instanceof Creeper) {
             Creeper creeper = (Creeper) event.getEntity();
-            if (creeper.getCustomName() == null || !creeper.getCustomName().contains("Extinto")) {
-                creeper.setCustomName(ChatColor.DARK_RED + "Creeper Extinto");
-                creeper.setCustomNameVisible(true);
-                creeper.setPowered(true);
+            creeper.setCustomName(ChatColor.DARK_RED + "Creeper Extinto");
+            creeper.setCustomNameVisible(true);
+            creeper.setPowered(true);
 
-                AttributeInstance healthAttr = creeper.getAttribute(Attribute.MAX_HEALTH);
-                if (healthAttr != null) {
-                    healthAttr.setBaseValue(50.0);
-                    creeper.setHealth(50.0);
-                }
+            AttributeInstance healthAttr = creeper.getAttribute(Attribute.GENERIC_MAX_HEALTH);
+            if (healthAttr != null) {
+                healthAttr.setBaseValue(50.0);
+                creeper.setHealth(50.0);
             }
         }
     }
