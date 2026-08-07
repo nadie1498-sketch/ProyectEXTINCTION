@@ -128,10 +128,10 @@ public final class Main extends JavaPlugin implements Listener, CommandExecutor 
             zombie.setCustomName(ChatColor.DARK_RED + "Zombie Extinto");
             zombie.setCustomNameVisible(true);
             
-            AttributeInstance attackAttr = zombie.getAttribute(Attribute.ATTACK_DAMAGE);
+            AttributeInstance attackAttr = zombie.getAttribute(Attribute.GENERIC_ATACK_DAMAGE);
             if (attackAttr != null) attackAttr.setBaseValue(30.0);
 
-            AttributeInstance healthAttr = zombie.getAttribute(Attribute.MAX_HEALTH);
+            AttributeInstance healthAttr = zombie.getAttribute(Attribute.GENERIC_NAX_HEALTH);
             if (healthAttr != null) {
                 healthAttr.setBaseValue(50.0);
                 zombie.setHealth(50.0);
@@ -142,7 +142,7 @@ public final class Main extends JavaPlugin implements Listener, CommandExecutor 
             creeper.setCustomNameVisible(true);
             creeper.setPowered(true);
 
-            AttributeInstance healthAttr = creeper.getAttribute(Attribute.MAX_HEALTH);
+            AttributeInstance healthAttr = creeper.getAttribute(Attribute.GENERIC_MAX_HEALTH);
             if (healthAttr != null) {
                 healthAttr.setBaseValue(50.0);
                 creeper.setHealth(50.0);
